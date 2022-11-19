@@ -1,13 +1,20 @@
-const c = document.getElementById("gamecanvas");
-const ws = c.getContext("2d");
-// const button = c.querySelector('gamecanvas');
-const cent =  c.width/2;
+const canvas = document.getElementById("gamecanvas");
+const c = canvas.getContext("2d");
+
+// Hard Code dimensions
+canvas.width = 400;
+canvas.height = 600;
+
+//Fill out with black
+c.fillRect(0,0,canvas.width,canvas.height)
+
+console.log(c)
 
 function drawWelcomeScreen() {
     //draw welcome screen first
     ws.font = '30px serif'
     ws.textAlign = 'center'
-    ws.fillText('Welcome to Math Defense!',cent,50)
+    ws.fillText('Welcome to Math Defense!',canvas.width/2,50)
 
     // //make button interactable
     // button.addEventListener('click', enterButton()
@@ -15,8 +22,6 @@ function drawWelcomeScreen() {
 
 function drawGameBackground() {
     //drawing commands for areas
-    ws.rect(0,00,400,450); //playable area
-    ws.stroke(); //draws the rectangle
 }
 
 function enterButton() {
@@ -32,4 +37,4 @@ function mouseMoveHandler(e) {
 
 document.addEventListener("mousemove", mouseMoveHandler, false);
 
-drawGameBackground()
+console.log(c)
