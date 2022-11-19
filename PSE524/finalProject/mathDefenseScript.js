@@ -15,8 +15,8 @@ function drawWelcomeScreen() {
 
 function drawGameBackground() {
     //drawing commands for areas
-    gb.rect(0,00,400,450); //playable area
-    gb.stroke(); //draws the rectangle
+    ws.rect(0,00,400,450); //playable area
+    ws.stroke(); //draws the rectangle
 }
 
 function enterButton() {
