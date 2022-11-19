@@ -6,9 +6,16 @@ canvas.width = 400;
 canvas.height = 600;
 
 //Fill out with black
-c.fillRect(0,0,canvas.width,canvas.height)
+c.fillRect(0,0,canvas.width,canvas.height);
 
-console.log(c)
+//Load background
+const image = new Image()
+image.onload = () => {
+    c.drawImage(image,0,0);
+}
+image.src = 'image/towerDefense.png'
+
+console.log(c);
 
 function drawWelcomeScreen() {
     //draw welcome screen first
