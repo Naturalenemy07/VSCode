@@ -1,35 +1,36 @@
-const c = document.getElementById("gamecanvas");
-const ws = c.getContext("2d");
-// const button = c.querySelector('gamecanvas');
-const cent =  c.width/2;
+const canvas = document.getElementById("gamecanvas");
+const c = canvas.getContext("2d");
 
-function drawWelcomeScreen() {
-    //draw welcome screen first
-    ws.font = '30px serif'
-    ws.textAlign = 'center'
-    ws.fillText('Welcome to Math Defense!',cent,50)
+// Hard Code dimensions
+canvas.width = 400;
+canvas.height = 600;
 
-    // //make button interactable
-    // button.addEventListener('click', enterButton()
+//Fill out with black
+c.fillRect(0,0,canvas.width,canvas.height);
+
+//Load background
+const image = new Image();
+image.onload = () => {
+    animate()
 }
+image.src = 'image/towerDefense.png'
 
-function drawGameBackground() {
-    //drawing commands for areas
-    ws.rect(0,00,400,450); //playable area
-    ws.stroke(); //draws the rectangle
+console.log(c);
+
+//will animate the enemy moving along waypoints
+let x = 60;
+let y = 40
+function animate() {
+    //recursively call animate()
+    requestAnimationFrame(animate);
+
+    //draw background
+    c.drawImage(image,0,0)
+
+    // drawing enemy
+    c.fillStyle='red';
+    c.fillRect(x,y,30,30);
+    x++;
+    y++;
+
 }
-
-function enterButton() {
-    ws.clearRect(0, 0, c.width, c.height)
-}
-
-function mouseMoveHandler(e) {
-    var relativeX = e.clientX - c.offsetLeft;
-    if(relativeX > 0 && relativeX < c.width) {
-      return 0;
-    }
-}
-
-document.addEventListener("mousemove", mouseMoveHandler, false);
-
-drawGameBackground()
