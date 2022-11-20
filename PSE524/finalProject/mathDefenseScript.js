@@ -8,6 +8,8 @@ canvas.height = 600;
 //Fill out with black
 c.fillRect(0,0,canvas.width,canvas.height);
 
+console.log(placementTilesData)
+
 //Load background
 const image = new Image();
 image.onload = () => {
@@ -22,7 +24,11 @@ class Enemy {
         this.position = position
         this.width = 20;
         this.height = 20;
-        this.waypointIndex = 6;
+        this.waypointIndex = 0;
+        this.center = {
+            x: this.position.x + this.width/2,
+            y: this.position.y + this.height/2
+        };
     } 
 
     //draw enemy
@@ -37,18 +43,36 @@ class Enemy {
         
         // updating x and y positions based on angle between current position and waypoint
         const toWaypoint = waypoints[this.waypointIndex];
-        const xDist = toWaypoint.x - this.position.x;
-        const yDist = toWaypoint.y - this.position.y;
+        const xDist = toWaypoint.x - this.center.x;
+        const yDist = toWaypoint.y - this.center.y;
         const angle = Math.atan2(yDist,xDist);
-        console.log(angle)
 
-        this.position.x += Math.cos(angle);
-        this.position.y += Math.sin(angle);
+        this.position.x += Math.cos(angle)/2;
+        this.position.y += Math.sin(angle)/2;
+
+        this.center = {
+            x: this.position.x + this.width/2,
+            y: this.position.y + this.height/2
+        }
+
+        if (
+            Math.round(this.center.x) === Math.round(toWaypoint.x) && 
+            Math.round(this.center.y) === Math.round(toWaypoint.y) &&
+            this.waypointIndex < waypoints.length - 1
+        ) {
+            this.waypointIndex++;
+        }
     }
 }
 
 //create enemies
-const enemy1 = new Enemy({position: {x: 60, y: 10}})
+const enemies = []
+for (let i = 1; i < 10; i++) {
+    const xOffset = i*30
+    enemies.push(new Enemy({
+        position: {x: waypoints[0].x - xOffset, y: waypoints[0].y}
+    }));
+}
 
 //will animate the enemy moving along waypoints
 function animate() {
@@ -59,5 +83,7 @@ function animate() {
     c.drawImage(image,0,0);
 
     //draw enemies
-    enemy1.update();
+    enemies.forEach(enemy => {
+        enemy.update()
+    })
 }
