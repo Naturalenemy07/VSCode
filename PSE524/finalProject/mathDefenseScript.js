@@ -22,6 +22,7 @@ class Enemy {
         this.position = position
         this.width = 20;
         this.height = 20;
+        this.waypointIndex = 6;
     } 
 
     //draw enemy
@@ -33,13 +34,21 @@ class Enemy {
     //update enemy properties, call draw each time
     update() {
         this.draw();
-        this.position.x += 1;
+        
+        // updating x and y positions based on angle between current position and waypoint
+        const toWaypoint = waypoints[this.waypointIndex];
+        const xDist = toWaypoint.x - this.position.x;
+        const yDist = toWaypoint.y - this.position.y;
+        const angle = Math.atan2(yDist,xDist);
+        console.log(angle)
+
+        this.position.x += Math.cos(angle);
+        this.position.y += Math.sin(angle);
     }
 }
 
 //create enemies
-const enemy1 = new Enemy({position: {x: 20, y: 40}})
-const enemy2 = new Enemy({position: {x: 25, y: 60}})
+const enemy1 = new Enemy({position: {x: 60, y: 10}})
 
 //will animate the enemy moving along waypoints
 function animate() {
@@ -50,6 +59,5 @@ function animate() {
     c.drawImage(image,0,0);
 
     //draw enemies
-    enemy1.update()
-    enemy2.update()
+    enemy1.update();
 }
