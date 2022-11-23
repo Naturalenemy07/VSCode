@@ -11,7 +11,7 @@ init_pop_size = 10
 num_child = 2
 num_kill = 2
 best_dist = 1000
-known_best = 92
+known_best = 100
 best_path = []
 
 # initiate global variable for sub population, build structured array (chromosome, fitness)
@@ -54,12 +54,17 @@ def crossover_genes(chrom1, chrom2):
         poslist = random.sample([0,1,2,3,4],3)
         return poslist
 
-    # initialize all zeros for child
+    # initialize all fives for child
     child_gene = [5,5,5,5,5]
 
     # first gene (first city visited) from parent 1 and last gene (last city visited) from parent two will go to child, rest is random
     child_gene[0] = chrom1['chrom'][0].nonzero()[1][0]
     child_gene[4] = chrom2['chrom'][0].nonzero()[1][4]
+    if child_gene[0] == child_gene[4]:
+        # if the genes are equal, just use first parents 4th gene
+        child_gene[4] = chrom1['chrom'][0].nonzero()[1][4]
+    
+    print(child_gene)
 
     # # checks if middle genes exist as first or second gene
     in_chrom = True
@@ -77,8 +82,6 @@ def crossover_genes(chrom1, chrom2):
     # adds to child gene
     for i in range(0,3):
         child_gene[i+1] = initposlist[i]
-    
-    print(child_gene)
 
     # builds child chromosome
     blank_child = np.zeros((5,5), dtype=int)
@@ -169,10 +172,10 @@ def hum_read(subpop):
     '''
     for chromosome in subpop:
         temp_path = chromosome['chrom'].nonzero()[1] 
-        print(temp_path)
         for visit in temp_path:
-            print(cities[visit] + "--", end='')
-        print(str(chromosome['fit']), "total miles")
+            pass
+        #     print(cities[visit] + "--", end='')
+        # print(str(chromosome['fit']), "total miles")
 
 def calc_best_dist(subpop):
     '''
@@ -201,7 +204,7 @@ def calc_best_dist(subpop):
 live_sub_pop = gen_pop(init_pop_size)
 
 
-for generation in range(0,300):
+for generation in range(0,100):
     # get fitness for each chromosome
     for fit_i in range(0, live_sub_pop.size):
         live_sub_pop[fit_i]['fit'] = fit_func(live_sub_pop[fit_i]['chrom'])
