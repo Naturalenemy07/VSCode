@@ -8,7 +8,52 @@ canvas.height = 600;
 //Fill out with black
 c.fillRect(0,0,canvas.width,canvas.height);
 
-console.log(placementTilesData)
+// Placement tiles (for defense structures)
+const placementTilesData2D = []
+
+for (let i = 0; i < placementTilesData.length; i+=20) {
+    placementTilesData2D.push(placementTilesData.slice(i, i + 20))
+}
+
+class PlacementTile {
+    constructor({position = {x:0, y:0}}) {
+        this.position = position
+        this.size = 20
+        this.color = 'rgba(255, 255, 255, 0.2)'
+    }
+
+    draw() {
+        c.fillStyle = this.color
+        c.fillRect(this.position.x, this.position.y, this.size, this.size)
+    }
+
+    //mouse 
+    update() {
+        this.draw();
+        if (mouse.x > this.position.x && mouse.x < (this.position.x + this.size) && 
+            mouse.y > this.position.y && mouse.y < (this.position.y + this.size)) {
+                console.log('colliding with placement tile')
+            }
+    }
+}
+
+const placementTiles = []
+
+placementTilesData2D.forEach((row, y_index) => {
+    row.forEach((symbol, x_index) => {
+        if (symbol === 5) {
+            //add building placement tile here
+            placementTiles.push(new PlacementTile({
+                position: {
+                    x: x_index * 20,
+                    y: y_index * 20
+                }
+            }))
+        }
+    })
+})
+
+console.log(placementTiles)
 
 //Load background
 const image = new Image();
@@ -86,4 +131,19 @@ function animate() {
     enemies.forEach(enemy => {
         enemy.update()
     })
+
+    //draw placement tiles
+    placementTiles.forEach(tile => {
+        tile.update(mouse)
+    })
 }
+
+const mouse = {
+    x: undefined,
+    y: undefined
+}
+
+window.addEventListener('mousemove', (event) => {
+    mouse.x = event.clientX
+    mouse.y = event.clientY
+})
