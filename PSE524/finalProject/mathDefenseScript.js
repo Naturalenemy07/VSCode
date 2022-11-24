@@ -30,9 +30,10 @@ class PlacementTile {
     //mouse 
     update() {
         this.draw();
-        if (mouse.x > this.position.x && mouse.x < (this.position.x + this.size) && 
-            mouse.y > this.position.y && mouse.y < (this.position.y + this.size)) {
-                console.log('colliding with placement tile')
+        // add 8 for the offset on screen
+        if (mouse.x > (this.position.x + 8) && mouse.x < (this.position.x + this.size + 8) && 
+            mouse.y > (this.position.y + 8) && mouse.y < (this.position.y + this.size + 8)) {
+                // console.log('colliding with placement tile')
             }
     }
 }
@@ -52,8 +53,6 @@ placementTilesData2D.forEach((row, y_index) => {
         }
     })
 })
-
-console.log(placementTiles)
 
 //Load background
 const image = new Image();
@@ -146,4 +145,5 @@ const mouse = {
 window.addEventListener('mousemove', (event) => {
     mouse.x = event.clientX
     mouse.y = event.clientY
+    // console.log(event)
 })
