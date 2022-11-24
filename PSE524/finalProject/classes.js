@@ -1,8 +1,10 @@
+// Class to mark locations where a building can be built
 class PlacementTile {
     constructor({position = {x:0, y:0}}) {
-        this.position = position
-        this.size = 20
-        this.color = 'rgba(255, 255, 255, 0.2)'
+        this.position = position;
+        this.size = 20;
+        this.color = 'rgba(255, 255, 255, 0.2)';
+        this.occupied = false
     }
 
     draw() {
@@ -24,7 +26,7 @@ class PlacementTile {
     }
 }
 
-//Class for enemies
+// Class for enemies
 class Enemy {
     //construct enemy with position and dimensions
     constructor({position = {x: 0, y: 0}}) {
@@ -72,13 +74,43 @@ class Enemy {
     }
 }
 
+// Class that 
 class Building {
     constructor({position = {x: 0, y: 0}}) {
         this.position = position;
+        this.center = {
+            x: this.position.x + 10,
+            y: this.position.y + 10
+        }
+        this.projectiles = [
+            new Projectile({
+                position: {
+                    x: this.center.x,
+                    y: this.center.y
+                }
+            })
+        ];
     }
 
     draw() {
         c.fillStyle = 'blue';
         c.fillRect(this.position.x, this.position.y, 20,20);
+    }
+}
+
+class Projectile {
+    constructor({position = {x: 0, y: 0}}) {
+        this.position = position;
+        this.velocity = {
+            x: 0,
+            y: 0
+        }
+    }
+
+    draw() {
+        c.beginPath();
+        c.arc(this.position.x, this.position.y, 3, 0, 2*Math.PI);
+        c.fillStyle = 'orange';
+        c.fill();
     }
 }

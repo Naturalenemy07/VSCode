@@ -50,9 +50,9 @@ for (let i = 1; i < 10; i++) {
     }));
 }
 
+// monitor for constructed buildingd
 const buildings = [];
 let activeTile = undefined;
-
 
 
 //Animation 
@@ -76,6 +76,10 @@ function animate() {
     //buildings
     buildings.forEach(building => {
         building.draw()
+
+        building.projectiles.forEach(projectile => {
+            projectile.draw()
+        })
     })
 }
 
@@ -86,13 +90,15 @@ const mouse = {
 }
 
 canvas.addEventListener('click', (event) => {
-    if (activeTile) {
+    if (activeTile && !activeTile.isOccupied) {
         buildings.push(new Building({
             position: {
                 x: activeTile.position.x,
                 y: activeTile.position.y
             }
-        }))
+        })
+        )
+        activeTile.isOccupied = true
     }
     console.log(buildings)
 })
@@ -102,10 +108,13 @@ window.addEventListener('mousemove', (event) => {
     mouse.y = event.clientY;
     // console.log(event)
 
+    activeTile = null
     for (let i = 0; i < placementTiles.length; i++) {
         const tile = placementTiles[i];
         if (mouse.x > (tile.position.x + 8) && mouse.x < (tile.position.x + tile.size + 8) && 
-            mouse.y > (tile.position.y + 8) && mouse.y < (tile.position.y + tile.size + 8)) {
+            mouse.y > (tile.position.y + 8) && mouse.y < (tile.position.y + tile.size + 8)
+            ) 
+            {
                 activeTile = tile;
                 break;
             }
