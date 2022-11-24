@@ -36,10 +36,15 @@ class Enemy {
         this.height = 20;
         this.health = 100;
         this.waypointIndex = 0;
+        this.enemySpeedConst = 3;
         this.center = {
             x: this.position.x + this.width/2,
             y: this.position.y + this.height/2
         };
+        this.velocity = {
+            x: 0,
+            y: 0
+        }
     } 
 
     //draw enemy
@@ -53,7 +58,6 @@ class Enemy {
         //health bar of enemy
         c.fillStyle = 'red'
         c.fillRect(this.position.x, this.position.y-7, this.width, 5)
-
         c.fillStyle = 'green'
         c.fillRect(this.position.x, this.position.y-7, this.width * (this.health / 100), 5)
     }
@@ -68,17 +72,21 @@ class Enemy {
         const yDist = toWaypoint.y - this.center.y;
         const angle = Math.atan2(yDist,xDist);
 
-        this.position.x += Math.cos(angle)/2;
-        this.position.y += Math.sin(angle)/2;
+        this.velocity.x = this.enemySpeedConst * Math.cos(angle)/2;
+        this.velocity.y = this.enemySpeedConst * Math.sin(angle)/2;
+        
+        this.position.x += this.velocity.x
+        this.position.y += this.velocity.y
 
         this.center = {
             x: this.position.x + this.width/2,
             y: this.position.y + this.height/2
         }
 
+        // sets the waypoint the enemy travels to
         if (
-            Math.round(this.center.x) === Math.round(toWaypoint.x) && 
-            Math.round(this.center.y) === Math.round(toWaypoint.y) &&
+            Math.abs(Math.round(this.center.x) - Math.round(toWaypoint.x)) < Math.abs(this.velocity.x * 3) && 
+            Math.abs(Math.round(this.center.y) - Math.round(toWaypoint.y)) < Math.abs(this.velocity.y * 3) &&
             this.waypointIndex < waypoints.length - 1
         ) {
             this.waypointIndex++;

@@ -3,11 +3,97 @@
     <head>
         <title>Math Defense</title>
     </head>
-    <body>
-        <canvas id="gamecanvas">
-            <script src="./classes.js"></script>
-            <script src="./waypoints1.js"></script>
-            <script src="./placementTilesData.js"></script>
-            <script src="./mathDefenseScript.js"></script>
-    </body>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: black;
+            font-family: 'Orbitron', sans-serif;
+        }
+    </style>
+    <div style="position: relative; display: inline-block">
+        <div
+            id="gameOver"
+            style="
+                position: absolute; 
+                top: 0; 
+                bottom: 0; 
+                left: 0; 
+                right: 0; 
+                display: none; 
+                align-items: center;
+                justify-content: center;
+                font-size: 50px;
+                color: white;
+                -webkit-text-stroke: 3px black;
+            "
+        >
+            GAME OVER!
+        </div>
+        <div 
+            style="
+                position: absolute;
+                top: 4px; 
+                right: 8px; 
+                font-size: 
+                20px;
+                color: white;
+                -webkit-text-stroke: 1px black;
+                display: flex;
+                align-items: center
+            "
+        >
+        
+        <!-- Currency Display -->
+        <div style="display:flex; align-items: center;">
+            <svg 
+                style="width: 20px; color: black; margin-right: 1px;"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-6 h-6"
+            >
+                <path
+                    stroke-linecap="round" 
+                    stroke-linejoin="round" 
+                    d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 
+                    12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 
+                    0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z" 
+                />
+              </svg>
+              
+            <div id="currency">100</div>
+        </div>
+
+        <!-- Hearts Display -->
+        <div style="display:flex; align-items: center;">
+            <svg 
+                style="width: 20px; color: red; margin-right: 1px; margin-left: 8px"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                class="w-6 h-6"
+            >
+                <path 
+                    d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 
+                    01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 
+                    0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 
+                    7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 
+                    01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" 
+                />
+            </svg>
+            <div id="hearts">10</div>            
+        </div>
+        </div>
+        <div>
+            <canvas id="gamecanvas">
+                <script src="./classes.js"></script>
+                <script src="./waypoints1.js"></script>
+                <script src="./placementTilesData.js"></script>
+                <script src="./mathDefenseScript.js"></script>
+        </div>
+    </div>
 </html>

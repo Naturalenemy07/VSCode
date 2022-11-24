@@ -3,7 +3,8 @@ const c = canvas.getContext("2d");
 
 // Hard Code dimensions
 canvas.width = 400;
-canvas.height = 600;
+canvas.height = 400;
+let tilesize = 20;
 
 //Fill out with black
 c.fillRect(0,0,canvas.width,canvas.height);
@@ -12,20 +13,21 @@ c.fillRect(0,0,canvas.width,canvas.height);
 // Placement tiles (for defense structures)
 const placementTilesData2D = []
 
-for (let i = 0; i < placementTilesData.length; i+=20) {
-    placementTilesData2D.push(placementTilesData.slice(i, i + 20))
+for (let i = 0; i < placementTilesData.length; i+=tilesize) {
+    placementTilesData2D.push(placementTilesData.slice(i, i + tilesize))
 }
 
 const placementTiles = []
 
 placementTilesData2D.forEach((row, y_index) => {
     row.forEach((symbol, x_index) => {
+        // hard coded symbol of 5 in placementTilesData.js
         if (symbol === 5) {
             //add building placement tile here
             placementTiles.push(new PlacementTile({
                 position: {
-                    x: x_index * 20,
-                    y: y_index * 20
+                    x: x_index * tilesize,
+                    y: y_index * tilesize
                 }
             }))
         }
@@ -58,13 +60,14 @@ function spawnEnemies(spawnCount) {
 const buildings = [];
 let activeTile = undefined;
 let enemyCount = 3;
+let hearts = 10;
 spawnEnemies(enemyCount);
 
 
 //Animation 
 function animate() {
     //recursively call animate()
-    requestAnimationFrame(animate);
+    const animationID = requestAnimationFrame(animate);
 
     //draw background
     c.drawImage(image,0,0);
@@ -74,6 +77,25 @@ function animate() {
     for (let enemy_i = enemies.length - 1; enemy_i >= 0; enemy_i--) {
         const enemy = enemies[enemy_i]
         enemy.update()
+
+        if (enemy.position.y + enemy.height + 1 >= canvas.height) {
+            hearts -= 1;
+            enemies.splice(enemy_i, 1);
+            document.querySelector('#hearts').innerHTML = hearts;
+
+            if (hearts === 0) {
+                console.log('Game Over!');
+                cancelAnimationFrame(animationID);
+                // show game over by grabbing HTML id
+                document.querySelector('#gameOver').style.display = 'flex'
+            }
+        }
+    }
+
+    // tracking total amount of enemies
+    if (enemies.length === 0) {
+        enemyCount += 1;
+        spawnEnemies(enemyCount);
     }
 
     //draw placement tiles
@@ -115,13 +137,6 @@ function animate() {
                         enemies.splice(enemyIndex, 1);
                     }
                 }
-                
-                // tracking total amount of enemies
-                if (enemies.length === 0) {
-                    enemyCount += 1;
-                    spawnEnemies(enemyCount);
-                }
-
                 console.log(projectile.enemy.health)
                 building.projectiles.splice(i, 1);
             }
