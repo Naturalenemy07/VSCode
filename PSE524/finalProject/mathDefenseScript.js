@@ -5,6 +5,7 @@ const c = canvas.getContext("2d");
 canvas.width = 400;
 canvas.height = 400;
 let tilesize = 20;
+let currency = 100;
 
 //Fill out with black
 c.fillRect(0,0,canvas.width,canvas.height);
@@ -135,6 +136,8 @@ function animate() {
                     
                     if (enemyIndex > -1) {
                         enemies.splice(enemyIndex, 1);
+                        currency += 1;
+                        document.querySelector('#currency').innerHTML = currency;
                     }
                 }
                 console.log(projectile.enemy.health)
@@ -151,7 +154,9 @@ const mouse = {
 }
 
 canvas.addEventListener('click', (event) => {
-    if (activeTile && !activeTile.isOccupied) {
+    if (activeTile && !activeTile.isOccupied && currency - 50 >= 0) {
+        currency -= 50;
+        document.querySelector('#currency').innerHTML = currency
         buildings.push(new Building({
             position: {
                 x: activeTile.position.x,

@@ -36,7 +36,7 @@ class Enemy {
         this.height = 20;
         this.health = 100;
         this.waypointIndex = 0;
-        this.enemySpeedConst = 3;
+        this.enemySpeedConst = 1;
         this.center = {
             x: this.position.x + this.width/2,
             y: this.position.y + this.height/2
@@ -148,11 +148,6 @@ class Building {
     draw() {
         c.fillStyle = 'blue';
         c.fillRect(this.position.x, this.position.y, this.width, this.width);
-
-        c.beginPath();
-        c.arc(this.center.x, this.center.y, this.range, 0, 2 * Math.PI)
-        c.fillStyle = 'rgba(0, 0, 255, 0.2)';
-        c.fill()
     }
 
     update() {
