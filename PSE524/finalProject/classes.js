@@ -32,7 +32,9 @@ class Enemy {
     constructor({position = {x: 0, y: 0}}) {
         this.position = position
         this.width = 20;
+        this.radius = this.width / 2;
         this.height = 20;
+        this.health = 100;
         this.waypointIndex = 0;
         this.center = {
             x: this.position.x + this.width/2,
@@ -43,7 +45,17 @@ class Enemy {
     //draw enemy
     draw() {
         c.fillStyle = 'red';
-        c.fillRect(this.position.x,this.position.y,this.width, this.height);
+        // c.fillRect(this.position.x,this.position.y,this.width, this.height);
+        c.beginPath();
+        c.arc(this.center.x, this.center.y, this.radius, 0, 2* Math.PI);
+        c.fill()
+
+        //health bar of enemy
+        c.fillStyle = 'red'
+        c.fillRect(this.position.x, this.position.y-7, this.width, 5)
+
+        c.fillStyle = 'green'
+        c.fillRect(this.position.x, this.position.y-7, this.width * (this.health / 100), 5)
     }
 
     //update enemy properties, call draw each time
@@ -74,43 +86,80 @@ class Enemy {
     }
 }
 
-// Class that 
-class Building {
-    constructor({position = {x: 0, y: 0}}) {
-        this.position = position;
-        this.center = {
-            x: this.position.x + 10,
-            y: this.position.y + 10
-        }
-        this.projectiles = [
-            new Projectile({
-                position: {
-                    x: this.center.x,
-                    y: this.center.y
-                }
-            })
-        ];
-    }
-
-    draw() {
-        c.fillStyle = 'blue';
-        c.fillRect(this.position.x, this.position.y, 20,20);
-    }
-}
-
 class Projectile {
-    constructor({position = {x: 0, y: 0}}) {
+    constructor({position = {x: 0, y: 0}, enemy}) {
         this.position = position;
+        this.radius = 3
         this.velocity = {
             x: 0,
             y: 0
         }
+        this.enemy = enemy
+        this.projectile_velocity_const = 4
     }
 
     draw() {
         c.beginPath();
-        c.arc(this.position.x, this.position.y, 3, 0, 2*Math.PI);
+        c.arc(this.position.x, this.position.y, this.radius, 0, 2*Math.PI);
         c.fillStyle = 'orange';
         c.fill();
+    }
+
+    update() {
+        this.draw()
+
+        const angle = Math.atan2(
+            this.enemy.center.y - this.position.y, 
+            this.enemy.center.x - this.position.x
+        )
+
+        this.velocity.x = this.projectile_velocity_const*Math.cos(angle);
+        this.velocity.y = this.projectile_velocity_const*Math.sin(angle);
+
+        this.position.x += this.velocity.x;
+        this.position.y += this.velocity.y;
+    }
+}
+
+// Class that 
+class Building {
+    constructor({position = {x: 0, y: 0}}) {
+        this.position = position;
+        this.width = 20;
+        this.center = {
+            x: this.position.x + this.width / 2,
+            y: this.position.y + this.width / 2
+        };
+        this.projectiles = [];
+        this.range = 70;
+        this.target
+        this.firerate = 50;
+        this.frames = 0
+    }
+
+    draw() {
+        c.fillStyle = 'blue';
+        c.fillRect(this.position.x, this.position.y, this.width, this.width);
+
+        c.beginPath();
+        c.arc(this.center.x, this.center.y, this.range, 0, 2 * Math.PI)
+        c.fillStyle = 'rgba(0, 0, 255, 0.2)';
+        c.fill()
+    }
+
+    update() {
+        this.draw();
+        this.frames++;
+        if (this.frames % this.firerate === 0 && this.target) {
+            this.projectiles.push(
+                new Projectile({
+                    position: {
+                        x: this.center.x,
+                        y: this.center.y
+                    },
+                    enemy: this.target
+                })
+            )
+        }
     }
 }
