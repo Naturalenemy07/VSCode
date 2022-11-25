@@ -4,10 +4,10 @@ class infoUser {
    //functions to create, aquire, modify user information
    //initialize class
     constructor(username, password, email, scores) {
-        this.username = username; //string
-        this.password = password; //should we encrypt this before storing on users device?
-        this.email = email; //string
-        this.scores = scores; //tuple [0,0,0], how will scores be represented?
+        this.username = username; 
+        this.password = password; 
+        this.email = email; 
+        this.scores = scores; 
     }
 
     //store information on local machine
