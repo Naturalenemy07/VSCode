@@ -1,0 +1,8 @@
+random math operators
+https://stackoverflow.com/questions/21227041/how-to-get-random-math-operator-for-a-quiz-qustion-in-javascript
+
+HTML, CSS, JS canvas game
+https://www.youtube.com/watch?v=C4_iRLlPNFc&t=14478s
+
+JS Help
+https://developer.mozilla.org/en-US/docs/Web/JavaScript

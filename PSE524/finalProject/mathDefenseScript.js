@@ -140,7 +140,6 @@ function animate() {
                         document.querySelector('#currency').innerHTML = currency;
                     }
                 }
-                console.log(projectile.enemy.health)
                 building.projectiles.splice(i, 1);
             }
         }
@@ -166,7 +165,6 @@ canvas.addEventListener('click', (event) => {
         )
         activeTile.isOccupied = true
     }
-    console.log(buildings)
 })
 
 window.addEventListener('mousemove', (event) => {

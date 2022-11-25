@@ -166,3 +166,40 @@ class Building {
         }
     }
 }
+
+// Class to generate problems
+class ProblemGen {
+    constructor() {
+        this.elementA = 0;
+        this.elementB = 0;
+        this.difficultConst = 10;
+    }
+
+    // generate random numbers between 1 and 10 for the equation generator
+    randomGen() {
+        return Math.floor(Math.random() * this.difficultConst) + 1;
+    }
+
+
+    update() {
+        this.elementA = this.randomGen();
+        this.elementB = this.randomGen();
+
+        console.log(this.elementA, this.elementB)
+
+        var operation = [{
+            operator: "+", 
+            method: function(){return this.elementA + this.elementB;}
+        },{
+            operator: "-",
+            method: function(){return this.elementA - this.elementB;}
+        },{
+            operator: "*",
+            method: function()
+        }]
+    }
+
+}
+
+problem = new ProblemGen()
+problem.update()
