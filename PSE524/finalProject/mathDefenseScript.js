@@ -155,7 +155,7 @@ const mouse = {
 canvas.addEventListener('click', (event) => {
     if (activeTile && !activeTile.isOccupied && currency - 50 >= 0) {
         currency -= 50;
-        document.querySelector('#currency').innerHTML = currency
+        document.querySelector('#currency').innerHTML = currency;
         buildings.push(new Building({
             position: {
                 x: activeTile.position.x,

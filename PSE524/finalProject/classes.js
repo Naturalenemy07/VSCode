@@ -181,25 +181,23 @@ class ProblemGen {
     }
 
 
-    update() {
+    getEquation() {
         this.elementA = this.randomGen();
         this.elementB = this.randomGen();
 
-        console.log(this.elementA, this.elementB)
+        console.log(this.elementA, this.elementB);
 
-        var operation = [{
-            operator: "+", 
-            method: function(){return this.elementA + this.elementB;}
-        },{
-            operator: "-",
-            method: function(){return this.elementA - this.elementB;}
-        },{
-            operator: "*",
-            method: function()
-        }]
+        var ans;
+        const operators = ['+','-','x'];
+        const map = {
+            '+': ans = this.elementA + this.elementB,
+            '-': ans = this.elementA - this.elementB,
+            'x': ans = this.elementA * this.elementB
+        }
+
+        const thisOperator = operators[Math.floor(Math.random()*operators.length)]
+        const answer = map[thisOperator]
+        return [thisOperator, String(answer)]
     }
 
 }
-
-problem = new ProblemGen()
-problem.update()
