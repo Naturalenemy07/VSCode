@@ -29,14 +29,14 @@ class PlacementTile {
 // Class for enemies
 class Enemy {
     //construct enemy with position and dimensions
-    constructor({position = {x: 0, y: 0}}) {
+    constructor({position = {x: 0, y: 0}}, wave) {
         this.position = position
         this.width = 20;
         this.radius = this.width / 2;
         this.height = 20;
         this.health = 100;
         this.waypointIndex = 0;
-        this.enemySpeedConst = 1;
+        this.enemySpeedConst = wave;
         this.center = {
             x: this.position.x + this.width/2,
             y: this.position.y + this.height/2
@@ -185,7 +185,7 @@ class ProblemGen {
         this.elementA = this.randomGen();
         this.elementB = this.randomGen();
 
-        console.log(this.elementA, this.elementB);
+        // console.log(this.elementA, this.elementB);
 
         var ans;
         const operators = ['+','-','x'];

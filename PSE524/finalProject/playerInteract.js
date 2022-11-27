@@ -31,7 +31,7 @@ function update() {
             newButSel = buttonRand();
         }
         buttonsUsed.push(newButSel[0]);
-        document.querySelector(newButSel[1]).innerHTML = Math.floor(Math.random()*problem.elementA + Math.random() * 10);
+        document.querySelector(newButSel[1]).innerHTML = Math.floor(Math.random()*problem.elementA + Math.random() * 50);
         counter++;
     };
 

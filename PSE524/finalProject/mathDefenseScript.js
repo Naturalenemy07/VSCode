@@ -6,6 +6,8 @@ canvas.width = 400;
 canvas.height = 400;
 let tilesize = 20;
 let currency = 100;
+let distOffset = 50;
+let currentWave = 1;
 
 //Fill out with black
 c.fillRect(0,0,canvas.width,canvas.height);
@@ -48,12 +50,15 @@ image.src = 'image/towerDefense.png'
 const enemies = [];
 
 function spawnEnemies(spawnCount) {
+    currentWave += 0.1;
     for (let i = 1; i < spawnCount + 1; i++) {
-        const xOffset = i*50
+        const xOffset = i*distOffset;
         enemies.push(
             new Enemy({
             position: {x: waypoints[0].x - xOffset, y: waypoints[0].y}
-        }));
+            },
+            wave = currentWave
+        ));
     }
 }
 
@@ -97,6 +102,15 @@ function animate() {
     if (enemies.length === 0) {
         enemyCount += 1;
         spawnEnemies(enemyCount);
+
+        // decreases the distance enemies are appart
+        if (distOffset > 20) {
+            distOffset -= 5;
+            console.log(distOffset)
+        }
+
+
+
     }
 
     //draw placement tiles
@@ -136,7 +150,7 @@ function animate() {
                     
                     if (enemyIndex > -1) {
                         enemies.splice(enemyIndex, 1);
-                        currency += 1;
+                        currency += 2;
                         document.querySelector('#currency').innerHTML = currency;
                     }
                 }
