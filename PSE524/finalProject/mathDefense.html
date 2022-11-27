@@ -107,9 +107,10 @@
                 </a>
             </div>
             <script>
+                const numButtons = 2
                 //function to randomly select button intervals
                 function buttonRand () {
-                    var num = Math.floor(Math.random()*2 +1);
+                    var num = Math.floor(Math.random()*numButtons +1);
                     var fulltext = '#button' + String(num);
                     return [num, fulltext];
                 }
@@ -126,14 +127,21 @@
                 var butSelTxt = correctButton[1];
                 document.querySelector(butSelTxt).innerHTML = eq[1];
 
-                // //fills in the rest of the buttons
-                // otherbutsel = 0;
-                // while() {
+                //fills in the rest of the buttons
+                var counter = 1;
+                var buttonsUsed = [];
+                buttonUsed.push(butsel)
 
-                // }
+                while (counter < numButtons) {
+                    var newButSel = buttonRand ()[0];
+                    while (buttonsUsed.includes(newButSel)) {
+                        newButSel = buttonRand()
+                    }
+                }
+                
 
                 // Monitors for double clicks on buttons
-                document.addEventListener('dblclick', (event) => {
+                document.addEventListener('click', (event) => {
                     event.x = event.clientX;
                     event.y = event.clientY;
                     console.log(event);
