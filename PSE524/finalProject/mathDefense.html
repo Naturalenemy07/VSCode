@@ -106,8 +106,13 @@
                     <span>20</span>
                 </a>
             </div>
+            <div class="dt-buttons">
+                <a class="dt-button" id="button3" aria-controls="button3" href="#">
+                    <span>30</span>
+                </a>
+            </div>
             <script>
-                const numButtons = 2
+                const numButtons = 3
                 //function to randomly select button intervals
                 function buttonRand () {
                     var num = Math.floor(Math.random()*numButtons +1);
@@ -129,24 +134,26 @@
 
                 //fills in the rest of the buttons
                 var counter = 1;
-                var buttonsUsed = [];
-                buttonUsed.push(butsel)
-
+                const buttonsUsed = [];
+                buttonsUsed.push(butsel)
+                
+                // Fills in the rest of the buttons with pseudo random numbers
                 while (counter < numButtons) {
-                    var newButSel = buttonRand ()[0];
-                    while (buttonsUsed.includes(newButSel)) {
-                        newButSel = buttonRand()
+                    var newButSel = buttonRand();
+                    while (buttonsUsed.includes(newButSel[0])) {
+                        newButSel = buttonRand();
                     }
+                    buttonsUsed.push(newButSel[0]);
+                    document.querySelector(newButSel[1]).innerHTML = Math.floor(Math.random()*problem.elementA + Math.random() * 10);
+                    counter++;
                 }
                 
-
                 // Monitors for double clicks on buttons
                 document.addEventListener('click', (event) => {
                     event.x = event.clientX;
                     event.y = event.clientY;
                     console.log(event);
                 })
-
             </script>
        </div>
     </div>
