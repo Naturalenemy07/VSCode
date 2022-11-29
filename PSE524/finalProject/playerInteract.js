@@ -1,4 +1,4 @@
-const numButtons = 3;
+const numButtons = 4;
 //function to randomly select button intervals
 function buttonRand() {
     var num = Math.floor(Math.random()*numButtons +1);
@@ -42,7 +42,12 @@ function update() {
             currency += 10;
             document.querySelector('#currency').innerHTML = currency;
             update();
-        }
+        } 
+        // else {
+        //     currency = currency - 20;
+        //     document.querySelector('#currency').innerHTML = currency;
+        //     update();
+        // }
     }
     );
     
@@ -53,18 +58,43 @@ function update() {
             currency += 10;
             document.querySelector('#currency').innerHTML = currency;
             update();
-        }
+        } 
+        // else {
+        //     currency -= 20;
+        //     document.querySelector('#currency').innerHTML = currency;
+        //     update();
+        // }
     }
     );
     
     document.getElementById('button3').addEventListener('click', function() {
-        // console.log('button3 clicked ' + button3.innerHTML);
+        // add money if right
         if (button3.innerHTML === eq[1]) {
             //add money
             currency += 10;
             document.querySelector('#currency').innerHTML = currency;
             update();
-        }
+        } 
+        // else {
+        //     currency -= 20;
+        //     document.querySelector('#currency').innerHTML = currency;
+        //     update();
+        // }
+    }
+    );
+    document.getElementById('button4').addEventListener('click', function() {
+        // console.log('button3 clicked ' + button3.innerHTML);
+        if (button4.innerHTML === eq[1]) {
+            //add money
+            currency += 10;
+            document.querySelector('#currency').innerHTML = currency;
+            update();
+        } 
+        // else {
+        //     currency -= 20;
+        //     document.querySelector('#currency').innerHTML = currency;
+        //     update();
+        // }
     }
     );
 }
