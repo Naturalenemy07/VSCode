@@ -9,6 +9,7 @@ function buttonRand() {
 function update() {
     //get a new equation
     problem = new ProblemGen;
+    var eq = [];
     var eq = problem.getEquation();
     var equationDisp = String(problem.elementA) + " " + eq[0] + " " + String(problem.elementB) + " =";
     document.querySelector('#equation').innerHTML = equationDisp; 
@@ -37,17 +38,13 @@ function update() {
 
     document.getElementById('button1').addEventListener('click', function() {
         // console.log('button1 clicked ' + button1.innerHTML);
+        console.log(eq[1]);
         if (button1.innerHTML === eq[1]) {
             //add money
             currency += 10;
             document.querySelector('#currency').innerHTML = currency;
             update();
         } 
-        // else {
-        //     currency = currency - 20;
-        //     document.querySelector('#currency').innerHTML = currency;
-        //     update();
-        // }
     }
     );
     

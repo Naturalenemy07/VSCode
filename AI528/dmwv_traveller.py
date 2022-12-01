@@ -1,18 +1,19 @@
-from mimetypes import init
 import numpy as np
 import gen_chrom as gc
 import random
+from matplotlib import pyplot as plt
 
 # Global variables
 cities = ["Frederick", "Hagerstown", "Germantown", "Shepardstown", "WashingtonDC"]
 distance_array = np.array([[0,25.1,21.9,31.7,45.4],[25.1,0,44.9,18,68.6],[21.9,44.9,0,50.7,27.7],[31.7,18,50.7,0,74.4],[45.4,68.6,27.7,74.4,0]])
 mut_rate = 0.1
 init_pop_size = 10
-num_child = 2
-num_kill = 2
+num_child = 1
+num_kill = 1
 best_dist = 1000
-known_best = 100
 best_path = []
+num_generations = 100
+path_dist = []
 
 # initiate global variable for sub population, build structured array (chromosome, fitness)
 dtype=[('chrom', np.ndarray),('fit', np.float32)]
@@ -63,8 +64,6 @@ def crossover_genes(chrom1, chrom2):
     if child_gene[0] == child_gene[4]:
         # if the genes are equal, just use first parents 4th gene
         child_gene[4] = chrom1['chrom'][0].nonzero()[1][4]
-    
-    print(child_gene)
 
     # # checks if middle genes exist as first or second gene
     in_chrom = True
@@ -113,7 +112,8 @@ def mate_select(subpop):
     # generate normalized inverses to have highest chance of selecting minimum, assign to chromosome
     suminv = np.sum(inv)
     for i in range(subpop.size):
-        copy_subpop[i]['fit'] = float("{:.8f}".format(inv[i]/suminv))
+        # copy_subpop[i]['fit'] = float("{:.4f}".format(inv[i]/suminv))
+        copy_subpop[i]['fit'] = inv[i]/suminv
 
     # select 
     return np.random.choice(subpop, 1, p=copy_subpop['fit'])
@@ -166,23 +166,13 @@ def mutate_gene(rate,chrom):
     
     return chrom
 
-def hum_read(subpop):
-    '''
-    print out status of each travel (chromosome in human readable format)
-    '''
-    for chromosome in subpop:
-        temp_path = chromosome['chrom'].nonzero()[1] 
-        for visit in temp_path:
-            pass
-        #     print(cities[visit] + "--", end='')
-        # print(str(chromosome['fit']), "total miles")
-
 def calc_best_dist(subpop):
     '''
     Stores best distance, returns current best dist
     '''
     global best_dist
     global best_path
+    global path_dist
 
     for chromosome in subpop:
         if chromosome['fit'] < best_dist:
@@ -192,8 +182,9 @@ def calc_best_dist(subpop):
             temp_path = chromosome['chrom'].nonzero()[1] 
             for visit in temp_path:
                 best_path.append(cities[visit])
-
-    return best_dist
+    
+    path_dist.append(best_dist)
+    return
 
 
 ###########################
@@ -203,8 +194,7 @@ def calc_best_dist(subpop):
 # generate population
 live_sub_pop = gen_pop(init_pop_size)
 
-
-for generation in range(0,100):
+for generation in range(0,num_generations):
     # get fitness for each chromosome
     for fit_i in range(0, live_sub_pop.size):
         live_sub_pop[fit_i]['fit'] = fit_func(live_sub_pop[fit_i]['chrom'])
@@ -230,7 +220,11 @@ for generation in range(0,100):
         live_sub_pop[update_m]['fit'] = fit_func(live_sub_pop[update_m]['chrom'])
     
     # hum_read(live_sub_pop)
-    if calc_best_dist(live_sub_pop) <= known_best:
-        print("Best achieved on generation:", generation, "at", best_dist, "miles with path:")
-        print("-".join(best_path))
-        break
+    calc_best_dist(live_sub_pop)
+
+## Print out graph and best path with best distance
+print("Shortest Path:", "-".join(best_path), "at", best_dist, "miles.")
+plt.plot(path_dist)
+plt.xlabel("Generation")
+plt.ylabel("Best Distance (miles)")
+plt.show()
