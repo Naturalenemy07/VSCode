@@ -29,14 +29,14 @@ class PlacementTile {
 // Class for enemies
 class Enemy {
     //construct enemy with position and dimensions
-    constructor({position = {x: 0, y: 0}}, wave) {
+    constructor({position = {x: 0, y: 0}}, speed) {
         this.position = position
         this.width = 20;
         this.radius = this.width / 2;
         this.height = 20;
         this.health = 100;
         this.waypointIndex = 0;
-        this.enemySpeedConst = wave;
+        this.enemySpeedConst = speed;
         this.center = {
             x: this.position.x + this.width/2,
             y: this.position.y + this.height/2
@@ -142,7 +142,8 @@ class Building {
         this.range = 70;
         this.target
         this.firerate = 50;
-        this.frames = 0
+        this.frames = 0;
+        this.building_level = 1;
     }
 
     draw() {

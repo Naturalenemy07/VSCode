@@ -7,7 +7,8 @@ canvas.height = 400;
 let tilesize = 20;
 let currency = 100;
 let distOffset = 50;
-let currentWave = 1;
+let currentWave = 0;
+let currentSpeed = 0.9
 
 //Fill out with black
 c.fillRect(0,0,canvas.width,canvas.height);
@@ -50,19 +51,21 @@ image.src = 'image/towerDefense.png'
 const enemies = [];
 
 function spawnEnemies(spawnCount) {
-    currentWave += 0.1;
+    currentWave += 1;
+    currentSpeed += 0.1;
+    document.querySelector('#WaveNum').innerHTML = "Wave:" + currentWave;
     for (let i = 1; i < spawnCount + 1; i++) {
         const xOffset = i*distOffset;
         enemies.push(
             new Enemy({
             position: {x: waypoints[0].x - xOffset, y: waypoints[0].y}
             },
-            wave = currentWave
+            speed = currentSpeed
         ));
     }
 }
 
-// monitor for constructed buildingd
+// monitor for constructed buildings
 const buildings = [];
 let activeTile = undefined;
 let enemyCount = 3;
@@ -106,11 +109,8 @@ function animate() {
         // decreases the distance enemies are appart
         if (distOffset > 20) {
             distOffset -= 5;
-            console.log(distOffset)
+            // console.log(distOffset)
         }
-
-
-
     }
 
     //draw placement tiles
@@ -167,6 +167,12 @@ const mouse = {
 }
 
 canvas.addEventListener('click', (event) => {
+    // // Determines if a building exists on the tile
+    // if (activeTile.isOccupied) {
+    //     console.log('Building here!');
+    // }
+
+    // If no building, and is enough currency
     if (activeTile && !activeTile.isOccupied && currency - 50 >= 0) {
         currency -= 50;
         document.querySelector('#currency').innerHTML = currency;
