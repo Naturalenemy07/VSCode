@@ -44,7 +44,7 @@ const image = new Image();
 image.onload = () => {
     animate();
 }
-image.src = 'image/towerDefense.png'
+image.src = 'towerDefense.png'
 
 
 //Create enemies

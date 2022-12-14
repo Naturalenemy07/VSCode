@@ -42,15 +42,13 @@ function createNewUser(name, password, email) {
 function changePassword(inpUsername, inpEmail) {
     if (inpUsername == localStorage.getItem("username")) {
         if (inpEmail == localStorage.getItem("email")) {
-            // return localStorage.password;
-            alert(localStorage.getItem("password"));
-            return true;
+            return localStorage.password;
         }
     }
 }
 
 // function to update scores
-function update(scoreIndex, amountToAdd) {
+function updateScore(scoreIndex, amountToAdd) {
     currentScores = localStorage.getItem("scores");
     updatedScores = currentScores[scoreIndex] + amountToAdd;
     localStorage.setItem("scores", updatedScores);
