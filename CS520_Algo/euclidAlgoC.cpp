@@ -11,6 +11,12 @@ int gcd(int p, int q)
 
 int main() 
 {
-    int vari = gcd(106,52);
+    int v1;
+    int v2;
+    std::cout << "Number 1: ";
+    std::cin >> v1;
+    std::cout << "Number 2: ";
+    std::cin >> v2;
+    int vari = gcd(v1,v2);
     std::cout << vari;
 }
