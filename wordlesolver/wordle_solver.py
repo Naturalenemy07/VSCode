@@ -8,9 +8,9 @@ from checkdriver import Checker
 import numpy as np
 
 # Get wordlist and create game
-pathToCDexe = 'C:\\Users\\johnd\Documents\\School\\Graduate School\\Computer Science\\VSCode\\chromedriver_win32\\chromedriver.exe'
-pathToCD = 'C:\\Users\\johnd\Documents\\School\\Graduate School\\Computer Science\\VSCode\\chromedriver_win32'
-wordlist = np.loadtxt("C:\\Users\\johnd\\Documents\\School\\Graduate School\\Computer Science\\VSCode\\wordlesolver\\enhancedwordlist.txt", dtype='str')
+pathToCDexe = 'path\to\chromedriver.exe'
+pathToCD = 'path\to\chromedriver_win32'
+wordlist = np.loadtxt("path\to\enhancedwordlist.txt", dtype='str')
 starting_words = np.array(["reach", "dealt", "salet", "crane", "audio"])
 game = ws(starting_words, wordlist)
 
