@@ -4,15 +4,21 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from wordle_logic import WordleSolver as ws
+from checkdriver import Checker
 import numpy as np
 
 # Get wordlist and create game
+pathToCDexe = 'C:\\Users\\johnd\Documents\\School\\Graduate School\\Computer Science\\VSCode\\chromedriver_win32\\chromedriver.exe'
+pathToCD = 'C:\\Users\\johnd\Documents\\School\\Graduate School\\Computer Science\\VSCode\\chromedriver_win32'
 wordlist = np.loadtxt("C:\\Users\\johnd\\Documents\\School\\Graduate School\\Computer Science\\VSCode\\wordlesolver\\enhancedwordlist.txt", dtype='str')
 starting_words = np.array(["reach", "dealt", "salet", "crane", "audio"])
 game = ws(starting_words, wordlist)
 
+# Update Chromedriver as needed
+ckr = Checker(pathToCD)
+
 # Start up automated bot
-s = Service('C:\\Users\\johnd\Documents\\School\\Graduate School\\Computer Science\\VSCode\\chromedriver_win32\\chromedriver.exe')
+s = Service(pathToCDexe)
 browser = webdriver.Chrome(service=s)
 url = 'https://www.nytimes.com/games/wordle/index.html'
 browser.get(url)
@@ -24,7 +30,7 @@ exit_button.click()
 time.sleep(2)
 
 # find interactable element
-interactable = browser.find_element(By.CLASS_NAME, 'Key-module_key__Rv-Vp')
+interactable = browser.find_element(By.CLASS_NAME, 'Key-module_key__kchQI')
 browser.implicitly_wait(10)
 
 def type_in_word(word):
