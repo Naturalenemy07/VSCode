@@ -8,9 +8,9 @@ from checkdriver import Checker
 import numpy as np
 
 # Get wordlist and create game
-pathToCDexe = 'path\to\chromedriver.exe'
-pathToCD = 'path\to\chromedriver_win32'
-wordlist = np.loadtxt("path\to\enhancedwordlist.txt", dtype='str')
+pathToCDexe = 'C:\\Users\\johnd\\Documents\\School\\Graduate School\\Computer Science\\VSCode\\chromedriver_win32\\chromedriver.exe'
+pathToCD = 'C:\\Users\\johnd\\Documents\\School\\Graduate School\\Computer Science\\VSCode\\chromedriver_win32'
+wordlist = np.loadtxt('C:\\Users\\johnd\\Documents\\School\\Graduate School\\Computer Science\\VSCode\\wordlesolver\\enhancedwordlist.txt', dtype='str')
 starting_words = np.array(["reach", "dealt", "salet", "crane", "audio"])
 game = ws(starting_words, wordlist)
 
@@ -29,7 +29,7 @@ exit_button = browser.find_element(By.CLASS_NAME, 'game-icon')
 exit_button.click()
 time.sleep(2)
 
-# find interactable element
+# find interactable element (this sometimes changes...)
 interactable = browser.find_element(By.CLASS_NAME, 'Key-module_key__kchQI')
 browser.implicitly_wait(10)
 
